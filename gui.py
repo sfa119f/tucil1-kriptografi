@@ -4,9 +4,10 @@ from tkinter import filedialog
 from extendedVigenereCipher import encryptEVC, decryptEVC
 from playfairCipher import encryptPfC, decryptPfC
 from affineCipher import invMod, encryptAfnC, decryptAfnC
+from savingManagement import downloadJson, addToJson
 
 def showCipher():
-  if cipher.get() == 6:
+  if cipher.get() == 'Affine Cipher':
     keyLabel.place_forget()
     key.place_forget()
     mKeyLabel.place(x=5, y=75)
@@ -51,8 +52,28 @@ def clearText():
   textOutput.delete('1.0', END)
   textOutput.config(state=DISABLED)
 
+def saveToJsonFile():
+  # isEncrypt, encryptType, key, outputValue
+  convertText()
+  if (canSave.get()):
+    if cipher.get() == 'Affine Cipher':
+      keyValue = {
+        'mKey': int(mKey.get()),
+        'bKey': int(bKey.get())
+      }
+    else:
+      keyValue = key.get()
+    addToJson(encrypt.get(), cipher.get(), keyValue, textOutput.get('1.0', 'end-1c'))
+    tkinter.messagebox.showinfo('Success', 'JSON file saved successfully')
+  else:
+    tkinter.messagebox.showinfo('Error', 'JSON file failed to save')
+
+def downloadJsonFile():
+  downloadJson()
+  tkinter.messagebox.showinfo('Success', 'JSON file downloaded successfully')
+
 def showOutput(outputValue):
-  if (cipher.get() != 4):
+  if cipher.get() != 'Extended Vigenere Cipher':
     temp = outputValue.replace(" ", "")
     outputValue = [outputValue[i:i+5] for i in range(0, len(outputValue), 5)]
     outputValue = ' '.join(outputValue)
@@ -60,17 +81,19 @@ def showOutput(outputValue):
   textOutput.delete('1.0', END)
   textOutput.insert(tkinter.END, outputValue)
   textOutput.config(state=DISABLED)
+  canSave.set(True)
 
 def convertText():
-  if cipher.get() == 0:
+  canSave.set(False)
+  if cipher.get() == 'X':
     tkinter.messagebox.showinfo('Error', 'Cipher type not selected')
   elif textInput.get('1.0', 'end-1c') == '':
     tkinter.messagebox.showinfo('Error', 'No input available')
-  elif cipher.get() != 6 and key.get() == '':
+  elif cipher.get() != 'Affine Cipher' and key.get() == '':
     tkinter.messagebox.showinfo('Error', 'No key available')
-  elif cipher.get() == 6 and (mKey.get() == '' or bKey.get() == ''):
+  elif cipher.get() == 'Affine Cipher' and (mKey.get() == '' or bKey.get() == ''):
     tkinter.messagebox.showinfo('Error', 'No M-key or B-key available')
-  elif cipher.get() == 6:
+  elif cipher.get() == 'Affine Cipher':
     try: 
       int(mKey.get())
       int(bKey.get())
@@ -89,25 +112,25 @@ def convertText():
           outputValue = decryptAfnC(int(mKey.get()), int(bKey.get()), inputValue)
         showOutput(outputValue)
   else:
-    if (cipher.get != 4):
+    if (cipher.get != 'Extended Vigenere Cipher'):
       inputValue = ''.join(filter(str.isalpha, textInput.get('1.0', 'end-1c'))).upper()
       keyValue = ''.join(filter(str.isalpha, key.get())).upper()
     else:
       inputValue = textInput.get('1.0', 'end-1c')
       keyValue = key.get()
 
-    if cipher.get() == 1:
+    if cipher.get() == 'Vigenere Cipher Standard':
       outputValue = 'Belum dibuat'
-    elif cipher.get() == 2:
+    elif cipher.get() == 'Full Vigenere Cipher':
       outputValue = 'Belum dibuat'
-    elif cipher.get() == 3:
+    elif cipher.get() == 'Auto-key Vigenere Cipher':
       outputValue = 'Belum dibuat'
-    elif cipher.get() == 4:
+    elif cipher.get() == 'Extended Vigenere Cipher':
       if encrypt.get():
         outputValue = encryptEVC(keyValue, inputValue)
       else:
         outputValue = decryptEVC(keyValue, inputValue)
-    elif cipher.get() == 5:
+    elif cipher.get() == 'Playfair Cipher':
       if encrypt.get():
         outputValue = encryptPfC(keyValue, inputValue)
       else:
@@ -120,13 +143,13 @@ root.geometry('905x505')
 root.resizable(0,0)
 
 Label(root, text='Choose Cipher:').place(x=5, y=5)
-cipher = IntVar()
-Radiobutton(root, text='Vigenere Cipher standard', variable=cipher, value=1, command=showCipher).place(x=90, y=5)
-Radiobutton(root, text='Full Vigenere Cipher', variable=cipher, value=2, command=showCipher).place(x=90, y=25)
-Radiobutton(root, text='Auto-key Vigenere Cipher', variable=cipher, value=3, command=showCipher).place(x=90, y=45)
-Radiobutton(root, text='Extended Vigenere Cipher', variable=cipher, value=4, command=showCipher).place(x=260, y=5)
-Radiobutton(root, text='Playfair Cipher', variable=cipher, value=5, command=showCipher).place(x=260, y=25)
-Radiobutton(root, text='Affine cipher', variable=cipher, value=6, command=showCipher).place(x=260, y=45)
+cipher = StringVar(root, 'X')
+Radiobutton(root, text='Vigenere Cipher Standard', variable=cipher, value='Vigenere Cipher Standard', command=showCipher).place(x=90, y=5)
+Radiobutton(root, text='Full Vigenere Cipher', variable=cipher, value='Full Vigenere Cipher', command=showCipher).place(x=90, y=25)
+Radiobutton(root, text='Auto-key Vigenere Cipher', variable=cipher, value='Auto-key Vigenere Cipher', command=showCipher).place(x=90, y=45)
+Radiobutton(root, text='Extended Vigenere Cipher', variable=cipher, value='Extended Vigenere Cipher', command=showCipher).place(x=260, y=5)
+Radiobutton(root, text='Playfair Cipher', variable=cipher, value='Playfair Cipher', command=showCipher).place(x=260, y=25)
+Radiobutton(root, text='Affine Cipher', variable=cipher, value='Affine Cipher', command=showCipher).place(x=260, y=45)
 
 btnImport = Button(root, text='Import File', command=importFile, bg='grey85', width=8)
 btnImport.place(x=460, y=40)
@@ -151,6 +174,12 @@ btnSwap = Button(root, text='Change to Decrypt', command=swapFunction, bg='grey8
 btnSwap.place(x=90, y=285)
 btnConvert = Button(root, text='Convert', command=convertText, bg='grey85')
 btnConvert.place(x=210, y=285)
+
+canSave = BooleanVar(root, True)
+btnSave = Button(root, text='Save To Json File', command=saveToJsonFile, bg='grey85')
+btnSave.place(x=675, y=285)
+btnDownload = Button(root, text='Download Json File', command=downloadJsonFile, bg='grey85')
+btnDownload.place(x=780, y=285)
 
 labelOutput = Label(root, text='Cipher Text:')
 labelOutput.place(x=5, y=330)

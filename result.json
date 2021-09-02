@@ -1,0 +1,10 @@
+{
+  "data": [
+    {
+      "isEncrypt": true,
+      "encryptType": "Playfair Cipher",
+      "value": "TFPAP Z",
+      "key": "qwer"
+    }
+  ]
+}

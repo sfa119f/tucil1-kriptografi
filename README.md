@@ -12,5 +12,5 @@ Pembuatan aplikasi ini bertujuan untuk memenuhi Tugas 1 Mata Kuliah Kriptografi 
 3. Aplikasi siap digunakan
 
 ## Authors
-Syarifuddin F A - 13518095 - Teknik Informatika 2018, Institut Teknologi Bandung, Bandung
-Faris Fadhilah  - 13518026 - Teknik Informatika 2018, Institut Teknologi Bandung, Bandung
+- Faris Fadhilah  - 13518026 - Teknik Informatika 2018, Institut Teknologi Bandung, Bandung
+- Syarifuddin F A - 13518095 - Teknik Informatika 2018, Institut Teknologi Bandung, Bandung

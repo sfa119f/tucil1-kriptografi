@@ -1,7 +1,7 @@
 def makeKey(key):
   res = "".join(dict.fromkeys(key)).replace('J', '')
   for i in range(65,91):
-    if not(i == 74) and (chr(i) not in res):
+    if i != 74 and (chr(i) not in res):
       res += chr(i)
   return res
 
@@ -29,7 +29,7 @@ def encryptPfC(key, text):
       result += key[((c2 // 5) * 5) + (c1 % 5)]
     i += 2
 
-  return key, text, result
+  return result
 
 def decryptPfC(key, cipher):
   key = makeKey(key)
@@ -50,4 +50,4 @@ def decryptPfC(key, cipher):
       result += key[((c2 // 5) * 5) + (c1 % 5)]
     i += 2
 
-  return key, result, cipher
+  return result

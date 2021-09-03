@@ -22,18 +22,6 @@ def makeKey(plainText,key):
             newKey = "".join(key)
         return newKey
 
-def makeKeyAuto(plainText, key):
-    key = key.upper()
-    key = list(key)
-    if (len(plainText) == len(key)):
-        return key
-    else:
-        for i in range (len(plainText)-len(key)):
-            k = plainText[i%len(plainText)] # Membuat perulangan key sepanjang plainText
-            key.append(k)
-            newKey = "".join(key)
-        return newKey
-
 def cipherVigenere(plainText, key):
     cipher = []
     for i in range (len(plainText)):
@@ -52,15 +40,14 @@ def plainVigenere(cipherText, key):
         pl = "".join(plain)
     return pl
 
-a = "negara penghasil minyak"
-b = "INDO"
+a = "thisplaintext"
+b = "SONY"
 
 c = makePlain(a)
-k = makeKeyAuto(c,b)
-print(c)
+k = makeKey(c,b)
+print(a)
 print(k)
 h = cipherVigenere(c,k)
 print("Cipher Text: " + h)
 p = plainVigenere(h,k)
 print("Plain Text: " + p)
-        

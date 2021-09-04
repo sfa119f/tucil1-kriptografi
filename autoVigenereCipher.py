@@ -43,6 +43,8 @@ def autoCipher(plainText, key):
 def autoPlain(cipherText, key):
 # Melakukan deskripsi cipherText menjadi plainText
 # Formula : p[j] = D(c[j])  = (c[j] - k[i]) mod 26
+    if len(key) > len(cipherText):
+        key = key[:len(cipherText)]
     plain = []
     for i in range(len(key)): # decrypt sepanjang key
         n = ((ord(cipherText[i]) - ord(key[i]) + 26) % 26) + ord ('A') # konversi ke angka

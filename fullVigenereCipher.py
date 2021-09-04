@@ -37,7 +37,7 @@ def makeKey(plainText,key):
         return key
 
 def fullCipher(plainText,key,matriks):
-# Melakukan enkripsi plainText menjadi cipherText
+# Melakukan enkripsi plainText menjadi cipherText (Full Vigenere Cipher)
 # Formula : Matriks vigenere merupakan urutan alfabet acak yang merupakan permutasi dari huruf alfabet
 # Melakukan pencocokan element pada matriks vigenere pada baris key[i] dan kolom plainText[j]
     p = makePlain(plainText)
@@ -56,7 +56,7 @@ def fullCipher(plainText,key,matriks):
     return cip
 
 def fullPlain(cipherText, key, matriks):
-# Melakukan enkripsi plainText menjadi cipherText
+# Melakukan enkripsi plainText menjadi cipherText (Full Vigenere Cipher)
 # Formula : Matriks vigenere merupakan urutan alfabet acak yang merupakan permutasi dari huruf alfabet
 # Melakukan pencarian indeks pada matriks vigenere pada baris key[i] dan nilai = cipherText[j]
     k = makeKey(cipherText,key)

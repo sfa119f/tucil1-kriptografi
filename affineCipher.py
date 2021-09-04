@@ -12,7 +12,7 @@ def invMod(val1, val2):
   return x % val2
 
 def encryptAfnC(mKey, bKey, text):
-# Melakukan enkripsi plainText menjadi cipherText
+# Melakukan enkripsi plainText menjadi cipherText (Affine Cipher)
 # Formula : C = mP + b (mod n)
   res = ''
   for i in range(len(text)):
@@ -20,7 +20,7 @@ def encryptAfnC(mKey, bKey, text):
   return res
 
 def decryptAfnC(mKey, bKey, cipher):
-# Melakukan dekripsi cipherText menjadi plainText
+# Melakukan dekripsi cipherText menjadi plainText (Affine Cipher)
 # Formula : P = invers(m) (C-b) (mod n)
   iMod = invMod(mKey, 26)
   if iMod == None:

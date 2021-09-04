@@ -29,7 +29,7 @@ def makeKey(plainText,key):
         return key
 
 def vigenereCipher(plainText, key):
-# Melakukan enkripsi plainText menjadi cipherText
+# Melakukan enkripsi plainText menjadi cipherText (Vigenere Cipher Standard)
 # Formula : c[j] = E(p[j])  = (p[j] + k[i]) mod 26
     p = makePlain(plainText)
     k = makeKey(p,key)
@@ -41,7 +41,7 @@ def vigenereCipher(plainText, key):
     return cip
 
 def vigenerePlain(cipherText, key):
-# Melakukan deskripsi cipherText menjadi plainText
+# Melakukan deskripsi cipherText menjadi plainText (Vigenere Cipher Standard)
 # Formula : p[j] = D(c[j])  = (c[j] - k[i]) mod 26
     k = makeKey(cipherText,key)
     plain = []

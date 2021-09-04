@@ -8,7 +8,7 @@ def makeKey(key):
   return res
 
 def encryptPfC(key, text):
-# Melakukan enkripsi plain text menjadi cipher text
+# Melakukan enkripsi plain text menjadi cipher text (Playfair Cipher)
 # Mengganti huruf 'J' dengan 'I' pada plain text
 # Bagi plain text menjadi pasangan 2 huruf
 # Jika ada huruf yang sama, maka sisipkan 'X' yang ditengah contohnya spasi
@@ -45,7 +45,7 @@ def encryptPfC(key, text):
   return result
 
 def decryptPfC(key, cipher):
-# Melakukan dekripsi cipher text menjadi plain text
+# Melakukan dekripsi cipher text menjadi plain text (Playfair Cipher)
 # Jika dua huruf terdapat pada baris bujursangkar yang sama maka
 # tiap huruf diganti dengan huruf di kirinya
 # Jika dua huruf terdapat pada kolom bujursangkar yang sama maka

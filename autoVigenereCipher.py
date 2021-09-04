@@ -30,7 +30,7 @@ def makeKeyAuto(plainText, key):
         return key
 
 def autoCipher(plainText, key):
-# Melakukan enkripsi plainText menjadi cipherText
+# Melakukan enkripsi plainText menjadi cipherText (Auto Vigenere Cipher)
 # Formula : c[j] = E(p[j])  = (p[j] + k[i]) mod 26
     p = makePlain(plainText)
     k = makeKeyAuto(p,key)
@@ -42,7 +42,7 @@ def autoCipher(plainText, key):
     return cip
 
 def autoPlain(cipherText, key):
-# Melakukan deskripsi cipherText menjadi plainText
+# Melakukan deskripsi cipherText menjadi plainText (Auto Vigenere Cipher)
 # Formula : p[j] = D(c[j])  = (c[j] - k[i]) mod 26
     if len(key) > len(cipherText):
         key = key[:len(cipherText)]

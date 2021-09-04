@@ -1,5 +1,5 @@
 def encryptEVC(key, text):
-# Melakukan enkripsi plain text menjadi cipher text
+# Melakukan enkripsi plain text menjadi cipher text (Extended Vigenere Cipher)
 # Karakter yang digunakan sebanyak 256 karakter (ASCII)
   j, res = 0, ''
   for i in range(len(text)):
@@ -9,7 +9,7 @@ def encryptEVC(key, text):
   return res
 
 def decryptEVC(key, cipher):
-# Melakukan deskripsi cipher text menjadi plain text
+# Melakukan deskripsi cipher text menjadi plain text (Extended Vigenere Cipher)
 # Karakter yang digunakan sebanyak 256 karakter (ASCII)
   j, res = 0, ''
   for i in range(len(cipher)):

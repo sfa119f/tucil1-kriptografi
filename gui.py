@@ -35,33 +35,49 @@ def showCipher():
     btnNoSpace.config(state=NORMAL)
     btnN5Letter.config(state=NORMAL)
 
+def fileCheck():
+  if isFile.get():
+    radioVCS.config(state=DISABLED)
+    radioFVC.config(state=DISABLED)
+    radioAVC.config(state=DISABLED)
+    radioPFC.config(state=DISABLED)
+    radioAFC.config(state=DISABLED)
+    if encrypt.get():
+      btnImport.config(state=NORMAL)
+  else:
+    radioVCS.config(state=NORMAL)
+    radioFVC.config(state=NORMAL)
+    radioAVC.config(state=NORMAL)
+    radioPFC.config(state=NORMAL)
+    radioAFC.config(state=NORMAL)
+    btnImport.config(state=DISABLED)
+
 def importFile():
-  # clearText()
-  # fileName = filedialog.askopenfile().name
-  # print(fileName)
-  # f = open(fileName, 'rb')
-  # content = f.read()
-  # print(content)
-  # f.close()
-  # print(list(map(int,content)))
-  # d = open('encryptFile', 'wb')
-  # d.write(content)
-  # d.close
-  # cipher.set('Extended Vigenere Cipher')
-  # showCipher()
-  # textInput.insert(tkinter.END, content)
-  # convertText()
-  tkinter.messagebox.showinfo('Error', 'Import file not available')
+  try:
+    clearText()
+    fileName = filedialog.askopenfile().name
+    f = open(fileName, 'rb')
+    content = f.read()
+    f.close()
+    cipher.set('Extended Vigenere Cipher')
+    showCipher()
+    textInput.insert(tkinter.END, content)
+    convertText()
+  except:
+    tkinter.messagebox.showinfo('Error', 'Something went wrong when import file')
 
 def swapFunction():
-  if encrypt.get() == True:
+  if encrypt.get():
     btnSwap.config(text='Change to Encrypt')
     labelInput.config(text='Cipher Text')
     labelOutput.config(text='Plain Text')
+    btnImport.config(state=DISABLED)
   else:
     btnSwap.config(text='Change to Decrypt')
     labelInput.config(text='Plain Text')
     labelOutput.config(text='Cipher Text')
+    if isFile.get():
+      btnImport.config(state=NORMAL)
   clearText()
   encrypt.set(not encrypt.get())
 
@@ -75,6 +91,11 @@ def clearText():
   textOutput.config(state=NORMAL)
   textOutput.delete('1.0', END)
   textOutput.config(state=DISABLED)
+
+def copy():
+  root.clipboard_clear()
+  root.clipboard_append(textOutput.get('1.0', 'end-1c'))
+  root.update()
 
 def typeOutput():
   textOutput.config(state=NORMAL)
@@ -97,7 +118,7 @@ def saveToJsonFile():
       }
     else:
       keyValue = key.get()
-    addToJson(encrypt.get(), cipher.get(), keyValue, textOutput.get('1.0', 'end-1c'))
+    addToJson(encrypt.get(), cipher.get(), keyValue, textOutput.get('1.0', 'end-1c'), isConvertFile.get())
     tkinter.messagebox.showinfo('Success', 'JSON file saved successfully')
   else:
     tkinter.messagebox.showinfo('Error', 'JSON file failed to save')
@@ -119,6 +140,7 @@ def showOutput(outputValue):
 
 def convertText():
   canSave.set(False)
+  isConvertFile.set(False)
   if cipher.get() == 'X':
     tkinter.messagebox.showinfo('Error', 'Cipher type not selected')
   elif textInput.get('1.0', 'end-1c') == '':
@@ -146,7 +168,7 @@ def convertText():
           outputValue = decryptAfnC(int(mKey.get()), int(bKey.get()), inputValue)
         showOutput(outputValue)
   else:
-    if (cipher.get != 'Extended Vigenere Cipher'):
+    if (cipher.get() != 'Extended Vigenere Cipher'):
       inputValue = ''.join(filter(str.isalpha, textInput.get('1.0', 'end-1c'))).upper()
       keyValue = ''.join(filter(str.isalpha, key.get())).upper()
     else:
@@ -176,6 +198,8 @@ def convertText():
         outputValue = encryptEVC(keyValue, inputValue)
       else:
         outputValue = decryptEVC(keyValue, inputValue)
+      if (isFile.get()):
+        isConvertFile.set(True)
     elif cipher.get() == 'Playfair Cipher':
       if encrypt.get():
         outputValue = encryptPfC(keyValue, inputValue)
@@ -187,19 +211,28 @@ root = Tk()
 root.title('Cipher')
 root.geometry('905x505')
 root.resizable(0,0)
+isConvertFile = BooleanVar(root, False)
 
 Label(root, text='Choose Cipher:').place(x=5, y=5)
 cipher = StringVar(root, 'X')
-Radiobutton(root, text='Vigenere Cipher Standard', variable=cipher, value='Vigenere Cipher Standard', command=showCipher).place(x=90, y=5)
-Radiobutton(root, text='Full Vigenere Cipher', variable=cipher, value='Full Vigenere Cipher', command=showCipher).place(x=90, y=25)
-Radiobutton(root, text='Auto-key Vigenere Cipher', variable=cipher, value='Auto-key Vigenere Cipher', command=showCipher).place(x=90, y=45)
-Radiobutton(root, text='Extended Vigenere Cipher', variable=cipher, value='Extended Vigenere Cipher', command=showCipher).place(x=260, y=5)
-Radiobutton(root, text='Playfair Cipher', variable=cipher, value='Playfair Cipher', command=showCipher).place(x=260, y=25)
-Radiobutton(root, text='Affine Cipher', variable=cipher, value='Affine Cipher', command=showCipher).place(x=260, y=45)
+radioVCS = Radiobutton(root, text='Vigenere Cipher Standard', variable=cipher, value='Vigenere Cipher Standard', command=showCipher)
+radioVCS.place(x=90, y=5)
+radioFVC = Radiobutton(root, text='Full Vigenere Cipher', variable=cipher, value='Full Vigenere Cipher', command=showCipher)
+radioFVC.place(x=90, y=25)
+radioAVC = Radiobutton(root, text='Auto-key Vigenere Cipher', variable=cipher, value='Auto-key Vigenere Cipher', command=showCipher)
+radioAVC.place(x=90, y=45)
+radioEVC = Radiobutton(root, text='Extended Vigenere Cipher', variable=cipher, value='Extended Vigenere Cipher', command=showCipher)
+radioEVC.place(x=260, y=5)
+radioPFC = Radiobutton(root, text='Playfair Cipher', variable=cipher, value='Playfair Cipher', command=showCipher)
+radioPFC.place(x=260, y=25)
+radioAFC = Radiobutton(root, text='Affine Cipher', variable=cipher, value='Affine Cipher', command=showCipher)
+radioAFC.place(x=260, y=45)
 
-# isFile = BooleanVar(root, False)
-btnImport = Button(root, text='Import File', command=importFile, bg='grey85', width=8)
-btnImport.place(x=460, y=40)
+isFile = BooleanVar(root, False)
+checkFile = Checkbutton(root, text='Encrypt/Decyrpt File', variable=isFile, command=fileCheck)
+checkFile.place(x=455, y=5)
+btnImport = Button(root, text='Import File', command=importFile, bg='grey85', width=8, state=DISABLED)
+btnImport.place(x=460, y=35)
 
 keyLabel = Label(text='Key')
 key = Entry(root, width=60)
@@ -230,7 +263,7 @@ btnNoSpace.place(x=370, y=285)
 btnN5Letter = Radiobutton(root, text='n-5 Letter', variable=outputType, value='n-5 Letter', command=typeOutput)
 btnN5Letter.place(x=470, y=285)
 
-canSave = BooleanVar(root, True)
+canSave = BooleanVar(root, False)
 btnSave = Button(root, text='Save To Json File', command=saveToJsonFile, bg='grey85')
 btnSave.place(x=675, y=285)
 btnDownload = Button(root, text='Download Json File', command=downloadJsonFile, bg='grey85')
@@ -238,6 +271,8 @@ btnDownload.place(x=780, y=285)
 
 labelOutput = Label(root, text='Cipher Text:')
 labelOutput.place(x=5, y=330)
+btnCopy = Button(root, text='Copy', command=copy, bg='grey85', width=8)
+btnCopy.place(x=5, y=350)
 textOutput = Text(root, height=10, width=100, state=DISABLED)
 textOutput.place(x=90, y=330)
 

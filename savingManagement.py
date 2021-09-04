@@ -9,9 +9,10 @@ def downloadJson():
   with open("result.json", "w") as outfile:
     outfile.write(json_object)
 
-def addToJson(isEncrypt, encryptType, key, outputValue):
+def addToJson(isEncrypt, encryptType, key, outputValue, isFile):
   temp = {
     'isEncrypt': isEncrypt,
+    'isFile': isFile,
     'encryptType': encryptType,
     'value': outputValue
   }

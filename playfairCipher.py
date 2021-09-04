@@ -1,4 +1,6 @@
 def makeKey(key):
+# Membuat key sesuai dengan aturan playfair cipher
+# Membuang huruf 'j' jika ada di key dan menambahkan semua huruf alfabet yang belum ada pada key 
   res = "".join(dict.fromkeys(key)).replace('J', '')
   for i in range(65,91):
     if i != 74 and (chr(i) not in res):
@@ -6,6 +8,17 @@ def makeKey(key):
   return res
 
 def encryptPfC(key, text):
+# Melakukan enkripsi plain text menjadi cipher text
+# Mengganti huruf 'J' dengan 'I' pada plain text
+# Bagi plain text menjadi pasangan 2 huruf
+# Jika ada huruf yang sama, maka sisipkan 'X' yang ditengah contohnya spasi
+# Jika jumlah huruf ganjil, maka sisipkan 'X' di bagian akhir
+# Formula : Jika dua huruf terdapat pada baris kunci yang sama maka tiap huruf 
+# diganti dengan huruf di kanannya
+# Jika dua huruf terdapat pada kolom kunci yang sama maka tiap huruf
+# diganti dengan huruf di bawahnya
+# Jika dua huruf tidak pada baris yang sama atau kolom yang sama maka diganti huruf pada perpotongan 
+# baris dan kolom antara huruf pertama dan huruf kedua
   key = makeKey(key)
   text = text.replace('J', 'I')
   i, result = 0, ''
@@ -32,6 +45,16 @@ def encryptPfC(key, text):
   return result
 
 def decryptPfC(key, cipher):
+# Melakukan dekripsi cipher text menjadi plain text
+# Jika dua huruf terdapat pada baris bujursangkar yang sama maka
+# tiap huruf diganti dengan huruf di kirinya
+# Jika dua huruf terdapat pada kolom bujursangkar yang sama maka
+# tiap huruf diganti dengan huruf di atasnya
+# Jika dua huruf tidak pada baris yang sama atau kolom yang sama ,
+# maka huruf pertama diganti dengan huruf pada perpotongan baris
+# huruf pertama dengan kolom huruf kedua . Huruf kedua diganti
+# dengan huruf pada titik sudut keempat dari persegi panjang yang
+# dibentuk dari tiga huruf yang digunakan sampai sejauh ini
   key = makeKey(key)
   i, result = 0, ''
   while i < len(cipher):

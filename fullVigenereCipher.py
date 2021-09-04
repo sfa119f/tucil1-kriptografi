@@ -17,7 +17,8 @@ def makePlain(PlainText):
     return newP
 
 def makeKey(plainText,key):
-# Mengubah key sesuai dengan format huruf besar dan mengulang char pada key sehingga panjang key = plaintext
+# Mengubah key sesuai dengan format huruf besar dan mengulang char pada key sehingga panjang 
+# key = plaintext
     key = key.upper()
     key = list(key) # Memecah kata menjadi huruf-huruf
     if (len(plainText) < len(key)):
@@ -38,6 +39,7 @@ def makeKey(plainText,key):
 def fullCipher(plainText,key,matriks):
 # Melakukan enkripsi plainText menjadi cipherText
 # Formula : Matriks vigenere merupakan urutan alfabet acak yang merupakan permutasi dari huruf alfabet
+# Melakukan pencocokan element pada matriks vigenere pada baris key[i] dan kolom plainText[j]
     p = makePlain(plainText)
     k = makeKey(p,key)
     pN = []
@@ -48,7 +50,7 @@ def fullCipher(plainText,key,matriks):
         pN.append(n)
         m = ord(k[i]) - ord('A') # Mengubah huruf menjadi angka
         kN.append(m)
-        r = matriks[kN[i]][pN[i]] # Mencari nilai pada matriks untuk key[i] dan plainText[i]
+        r = matriks[kN[i]][pN[i]] # Mencari nilai pada matriks untuk baris key[i] dan  kolom plainText[j]
         res.append(chr(int(r)+ord('A'))) # Mengubah angka menjadi huruf
         cip = "".join(res) # Menggabungkan huruf
     return cip
@@ -56,6 +58,7 @@ def fullCipher(plainText,key,matriks):
 def fullPlain(cipherText, key, matriks):
 # Melakukan enkripsi plainText menjadi cipherText
 # Formula : Matriks vigenere merupakan urutan alfabet acak yang merupakan permutasi dari huruf alfabet
+# Melakukan pencarian indeks pada matriks vigenere pada baris key[i] dan nilai = cipherText[j]
     k = makeKey(cipherText,key)
     cN = []
     kN = []
@@ -65,7 +68,7 @@ def fullPlain(cipherText, key, matriks):
         cN.append(n)
         m = ord(k[i]) - ord('A') # Mengubah huruf menjadi angka
         kN.append(m)
-        r = matriks[kN[i]].index(str(cN[i])) # Mencari index pada kolom key[i] yang nilainya = cipherText[i] 
+        r = matriks[kN[i]].index(str(cN[i])) # Mencari index pada baris key[i] yang nilainya = cipherText[j] 
         res.append(chr(int(r)+ord('A'))) # Mengubah angka menjadi huruf
         pl = "".join(res) # Menggabungkan huruf
     return pl

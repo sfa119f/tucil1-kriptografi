@@ -64,10 +64,10 @@ def fullPlain(cipherText, key, matriks):
         pl = "".join(res) # Menggabungkan huruf
     return pl
     
-a = "negara penghasil minyak"
+"""a = "negara penghasil minyak"
 b = "INDO"
 c = "CZTCDASVCNBCIEGWXYLCB"
 
 m = readMatriks("matriks.txt")
 print(fullCipher(a,b,m))
-print(fullPlain(c,b,m))
+print(fullPlain(c,b,m))"""

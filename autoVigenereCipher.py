@@ -32,13 +32,12 @@ def autoCipher(plainText, key):
         n = ((ord(p[i]) + ord(k[i])) % 26) + ord('A') # konversi ke angka
         cipher.append(chr(n)) # konversi ke alfabet
         cip = "".join(cipher) # Menggabungkan huruf menjadi kata
-    return cip
+    return cip, p
 
 def autoPlain(cipherText, plainText,key):
 # Melakukan deskripsi cipherText menjadi plainText
 # Formula : p[j] = D(c[j])  = (c[j] - k[i]) mod 26
-    p = makePlain(plainText)
-    k = makeKeyAuto(p,key)
+    k = makeKeyAuto(plainText,key)
     plain = []
     for i in range(len(cipherText)):
         n = ((ord(cipherText[i]) - ord(k[i]) + 26) % 26) + ord ('A') # konversi ke angka
@@ -46,9 +45,11 @@ def autoPlain(cipherText, plainText,key):
         pl = "".join(plain) # Menggabungkan huruf menjadi kata
     return pl
 
-a = "thisplaintext"
+"""a = "thisplaintext"
 b = "SONY"
-c = "LVVQISIACEEFG"
 
-print(autoCipher(a,b))
-print(autoPlain(c,a,b))
+x,y = autoCipher(a,b)
+print(x)
+print(y)
+z = autoPlain(x,y,b)
+print(z)"""

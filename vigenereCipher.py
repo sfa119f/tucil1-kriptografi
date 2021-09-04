@@ -45,9 +45,9 @@ def vigenerePlain(cipherText, key):
         pl = "".join(plain) # Menggabungkan huruf menjadi kata
     return pl
 
-a = "thisplaintext"
+"""a = "thisplaintext"
 b = "SONY"
 c = "LVVQHZNGFHRVL"
 
 print(vigenereCipher(a,b))
-print(vigenerePlain(c,b))
+print(vigenerePlain(c,b))"""

@@ -78,9 +78,11 @@ def downloadJsonFile():
 
 def showOutput(outputValue):
   if cipher.get() != 'Extended Vigenere Cipher':
-    temp = outputValue.replace(" ", "")
-    outputValue = [outputValue[i:i+5] for i in range(0, len(outputValue), 5)]
-    outputValue = ' '.join(outputValue)
+    if form.get() == "5 Huruf":
+      temp = outputValue.replace(" ", "")
+      outputValue = [outputValue[i:i+5] for i in range(0, len(outputValue), 5)]
+      outputValue = ' '.join(outputValue)
+
   textOutput.config(state=NORMAL)
   textOutput.delete('1.0', END)
   textOutput.insert(tkinter.END, outputValue)
@@ -188,6 +190,12 @@ btnSwap = Button(root, text='Change to Decrypt', command=swapFunction, bg='grey8
 btnSwap.place(x=90, y=285)
 btnConvert = Button(root, text='Convert', command=convertText, bg='grey85')
 btnConvert.place(x=210, y=285)
+
+form = StringVar(root,'X')
+labelChoose = Label(root, text="Choose Output: ")
+labelChoose.place(x=280, y=285)
+Radiobutton(root, text="Tanpa Spasi", variable=form, value="Tanpa Spasi").place(x=370, y=285)
+Radiobutton(root, text="N 5-Huruf", variable=form, value="5 Huruf").place(x=470, y=285)
 
 canSave = BooleanVar(root, True)
 btnSave = Button(root, text='Save To Json File', command=saveToJsonFile, bg='grey85')

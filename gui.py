@@ -11,6 +11,7 @@ from affineCipher import invMod, encryptAfnC, decryptAfnC
 from savingManagement import downloadJson, addToJson
 
 def showCipher():
+# Menampilkan cipherText ke layar
   if cipher.get() == 'Affine Cipher':
     keyLabel.place_forget()
     key.place_forget()
@@ -36,6 +37,7 @@ def showCipher():
     btnN5Letter.config(state=NORMAL)
 
 def fileCheck():
+# Mengecek file
   if isFile.get():
     radioVCS.config(state=DISABLED)
     radioFVC.config(state=DISABLED)
@@ -53,6 +55,7 @@ def fileCheck():
     btnImport.config(state=DISABLED)
 
 def importFile():
+# Melakukan import file
   try:
     clearText()
     fileName = filedialog.askopenfile().name
@@ -67,6 +70,7 @@ def importFile():
     tkinter.messagebox.showinfo('Error', 'Something went wrong when import file')
 
 def swapFunction():
+# Mengubah fungsi enkripsi menjadi dekripsi dan begitu sebaliknya
   if encrypt.get():
     btnSwap.config(text='Change to Encrypt')
     labelInput.config(text='Cipher Text')
@@ -82,22 +86,26 @@ def swapFunction():
   encrypt.set(not encrypt.get())
 
 def clearKey():
+# Menghapus key yang ada di layar
   key.delete(0, 'end')
   mKey.delete(0, 'end')
   bKey.delete(0, 'end')
 
 def clearText():
+# Menghapus text yang ada di layar
   textInput.delete('1.0', END)
   textOutput.config(state=NORMAL)
   textOutput.delete('1.0', END)
   textOutput.config(state=DISABLED)
 
 def copy():
+# Melakukan copy
   root.clipboard_clear()
   root.clipboard_append(textOutput.get('1.0', 'end-1c'))
   root.update()
 
 def typeOutput():
+# Mengubah tipe hasil
   textOutput.config(state=NORMAL)
   temp = textOutput.get('1.0', 'end-1c')
   if outputType.get() == 'n-5 Letter':
@@ -109,6 +117,7 @@ def typeOutput():
   textOutput.config(state=DISABLED)
 
 def saveToJsonFile():
+# Menyimpan hasil ke JSON File
   convertText()
   if (canSave.get()):
     if cipher.get() == 'Affine Cipher':
@@ -124,10 +133,12 @@ def saveToJsonFile():
     tkinter.messagebox.showinfo('Error', 'JSON file failed to save')
 
 def downloadJsonFile():
+# Mengunduh JSON File
   downloadJson()
   tkinter.messagebox.showinfo('Success', 'JSON file downloaded successfully')
 
 def showOutput(outputValue):
+# Menampilkan hasil ke layar
   if cipher.get() != 'Extended Vigenere Cipher':
     if outputType.get() == 'n-5 Letter':
       outputValue = ' '.join([outputValue[i:i+5] for i in range(0, len(outputValue), 5)])
@@ -139,6 +150,7 @@ def showOutput(outputValue):
   canSave.set(True)
 
 def convertText():
+# Mengubah text
   canSave.set(False)
   isConvertFile.set(False)
   if cipher.get() == 'X':

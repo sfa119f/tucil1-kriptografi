@@ -10,7 +10,8 @@ def makePlain(PlainText):
     return newP
 
 def makeKeyAuto(plainText, key):
-# Mengubah key sesuai dengan format huruf besar dan menambah plainText ke belakang key hingga panjang key = plainText
+# Mengubah key sesuai dengan format huruf besar dan menambah plainText ke belakang key 
+# hingga panjang key = plainText
     key = key.upper()
     key = list(key) # Memecah kata menjadi huruf-huruf
     if (len(plainText) < len(key)):

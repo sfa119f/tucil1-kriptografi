@@ -1,4 +1,5 @@
 def invMod(val1, val2):
+# 
   a, b, x, y, u, v =  val1, val2, 0, 1, 1, 0
   while a != 0:
     q = b // a
@@ -11,12 +12,16 @@ def invMod(val1, val2):
   return x % val2
 
 def encryptAfnC(mKey, bKey, text):
+# Melakukan enkripsi plainText menjadi cipherText
+# Formula : C = mP + b (mod n)
   res = ''
   for i in range(len(text)):
     res += chr((mKey * (ord(text[i]) - ord('A')) + bKey) % 26 + ord('A'))
   return res
 
 def decryptAfnC(mKey, bKey, cipher):
+# Melakukan dekripsi cipherText menjadi plainText
+# Formula : P = invers(m) (C-b) (mod n)
   iMod = invMod(mKey, 26)
   if iMod == None:
     return None

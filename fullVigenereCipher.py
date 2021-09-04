@@ -20,14 +20,20 @@ def makeKey(plainText,key):
 # Mengubah key sesuai dengan format huruf besar dan mengulang char pada key sehingga panjang key = plaintext
     key = key.upper()
     key = list(key) # Memecah kata menjadi huruf-huruf
-    if (len(plainText) == len(key)): 
-        return key
-    else:
+    if (len(plainText) < len(key)):
+        for i in range (len(plainText)):
+            k = key[i]
+            key.append(k)
+            newKey = "".join(key)
+        return newKey 
+    elif (len(plainText) > len(key)):
         for i in range (len(plainText)-len(key)):
             k = key[i%len(key)] 
             key.append(k)
             newKey = "".join(key) # Menggabungkan huruf menjadi kata
         return newKey
+    else:
+        return key
 
 def fullCipher(plainText,key,matriks):
 # Melakukan enkripsi plainText menjadi cipherText
@@ -63,11 +69,3 @@ def fullPlain(cipherText, key, matriks):
         res.append(chr(int(r)+ord('A'))) # Mengubah angka menjadi huruf
         pl = "".join(res) # Menggabungkan huruf
     return pl
-    
-"""a = "negara penghasil minyak"
-b = "INDO"
-c = "CZTCDASVCNBCIEGWXYLCB"
-
-m = readMatriks("matriks.txt")
-print(fullCipher(a,b,m))
-print(fullPlain(c,b,m))"""

@@ -13,14 +13,20 @@ def makeKeyAuto(plainText, key):
 # Mengubah key sesuai dengan format huruf besar dan menambah plainText ke belakang key hingga panjang key = plainText
     key = key.upper()
     key = list(key) # Memecah kata menjadi huruf-huruf
-    if (len(plainText) == len(key)):
-        return key
-    else:
+    if (len(plainText) < len(key)):
+        for i in range (len(plainText)):
+            k = key[i]
+            key.append(k)
+            newKey = "".join(key)
+        return newKey 
+    elif (len(plainText) > len(key)):
         for i in range (len(plainText)-len(key)):
             k = plainText[i%len(plainText)] # Membuat perulangan key sepanjang plainText
             key.append(k)
             newKey = "".join(key) # Menggabungkan huruf menjadi kata
         return newKey
+    else:
+        return key
 
 def autoCipher(plainText, key):
 # Melakukan enkripsi plainText menjadi cipherText
@@ -49,12 +55,3 @@ def autoPlain(cipherText, key):
         pl = "".join(plain) # Menggabungkan huruf menjadi kata
         j += 1
     return pl
-
-"""a = "thisplaintext"
-b = "SONY"
-
-x,y = autoCipher(a,b)
-print(x)
-print(y)
-z = autoPlain(x,y,b)
-print(z)"""

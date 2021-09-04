@@ -154,33 +154,23 @@ def convertText():
       keyValue = key.get()
 
     if cipher.get() == 'Vigenere Cipher Standard':
-      if (len(inputValue) >= len(keyValue)):
-        if encrypt.get():
-          outputValue = vigenereCipher(inputValue, keyValue)
-        else:
-          outputValue = vigenerePlain(inputValue, keyValue)
+      if encrypt.get():
+        outputValue = vigenereCipher(inputValue, keyValue)
       else:
-        outputValue = ""
-        tkinter.messagebox.showinfo('Error', 'Plain text length must be greater than key length')
+        outputValue = vigenerePlain(inputValue, keyValue)
+
     elif cipher.get() == 'Full Vigenere Cipher':
-      if (len(inputValue) >= len(keyValue)):
-        if encrypt.get():
-          outputValue = fullCipher(inputValue, keyValue, readMatriks("matriks.txt"))
-          
-        else:
-          outputValue = fullPlain(inputValue, keyValue, readMatriks("matriks.txt"))
+      if encrypt.get():
+        outputValue = fullCipher(inputValue, keyValue, readMatriks("matriks.txt"))
       else:
-        outputValue = ""
-        tkinter.messagebox.showinfo('Error', 'Plain text length must be greater than key length')
+        outputValue = fullPlain(inputValue, keyValue, readMatriks("matriks.txt"))
+
     elif cipher.get() == 'Auto-key Vigenere Cipher':
-      if (len(inputValue) >= len(keyValue)):
-        if encrypt.get():
-          outputValue = autoCipher(inputValue, keyValue)
-        else:
-          outputValue = autoPlain(inputValue, keyValue)
+      if encrypt.get():
+        outputValue = autoCipher(inputValue, keyValue)
       else:
-        outputValue = ""
-        tkinter.messagebox.showinfo('Error', 'Plain text length must be greater than key length')
+        outputValue = autoPlain(inputValue, keyValue)
+        
     elif cipher.get() == 'Extended Vigenere Cipher':
       if encrypt.get():
         outputValue = encryptEVC(keyValue, inputValue)

@@ -1,6 +1,10 @@
+from os import read
 from tkinter import *
 import tkinter.messagebox
 from tkinter import filedialog
+from vigenereCipher import vigenereCipher, vigenerePlain
+from fullVigenereCipher import fullCipher, fullPlain, readMatriks
+from autoVigenereCipher import autoCipher, autoPlain
 from extendedVigenereCipher import encryptEVC, decryptEVC
 from playfairCipher import encryptPfC, decryptPfC
 from affineCipher import invMod, encryptAfnC, decryptAfnC
@@ -84,6 +88,7 @@ def showOutput(outputValue):
   canSave.set(True)
 
 def convertText():
+  global plain
   canSave.set(False)
   if cipher.get() == 'X':
     tkinter.messagebox.showinfo('Error', 'Cipher type not selected')
@@ -120,11 +125,20 @@ def convertText():
       keyValue = key.get()
 
     if cipher.get() == 'Vigenere Cipher Standard':
-      outputValue = 'Belum dibuat'
+      if encrypt.get():
+        outputValue = vigenereCipher(inputValue, keyValue)
+      else:
+        outputValue = vigenerePlain(inputValue, keyValue)
     elif cipher.get() == 'Full Vigenere Cipher':
-      outputValue = 'Belum dibuat'
+      if encrypt.get():
+        outputValue = fullCipher(inputValue, keyValue, readMatriks("matriks.txt"))
+      else:
+        outputValue = fullPlain(inputValue, keyValue, readMatriks("matriks.txt"))
     elif cipher.get() == 'Auto-key Vigenere Cipher':
-      outputValue = 'Belum dibuat'
+      if encrypt.get():
+        outputValue, plain = autoCipher(inputValue, keyValue)
+      else:
+        outputValue = autoPlain(inputValue, plain, keyValue)
     elif cipher.get() == 'Extended Vigenere Cipher':
       if encrypt.get():
         outputValue = encryptEVC(keyValue, inputValue)

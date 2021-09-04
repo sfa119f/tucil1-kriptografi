@@ -161,8 +161,8 @@ def convertText():
       elif invMod(int(mKey.get()), 26) == None:
         tkinter.messagebox.showinfo('Error', 'M-key must be a relatively prime with 26')
       else:
+        inputValue = ''.join(filter(str.isalpha, textInput.get('1.0', 'end-1c'))).upper()
         if encrypt.get():
-          inputValue = ''.join(filter(str.isalpha, textInput.get('1.0', 'end-1c'))).upper()
           outputValue = encryptAfnC(int(mKey.get()), int(bKey.get()), inputValue)
         else:
           outputValue = decryptAfnC(int(mKey.get()), int(bKey.get()), inputValue)

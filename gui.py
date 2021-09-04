@@ -99,7 +99,7 @@ def clearText():
   textOutput.config(state=DISABLED)
 
 def copy():
-# Melakukan copy
+# Melakukan copy pada output value
   root.clipboard_clear()
   root.clipboard_append(textOutput.get('1.0', 'end-1c'))
   root.update()
@@ -150,7 +150,7 @@ def showOutput(outputValue):
   canSave.set(True)
 
 def convertText():
-# Mengubah text
+# Mengubah text untuk dienkripsi/dideskripsi
   canSave.set(False)
   isConvertFile.set(False)
   if cipher.get() == 'X':
@@ -225,6 +225,7 @@ root.geometry('905x505')
 root.resizable(0,0)
 isConvertFile = BooleanVar(root, False)
 
+# Radio button pilihan cipher
 Label(root, text='Choose Cipher:').place(x=5, y=5)
 cipher = StringVar(root, 'X')
 radioVCS = Radiobutton(root, text='Vigenere Cipher Standard', variable=cipher, value='Vigenere Cipher Standard', command=showCipher)
@@ -240,12 +241,14 @@ radioPFC.place(x=260, y=25)
 radioAFC = Radiobutton(root, text='Affine Cipher', variable=cipher, value='Affine Cipher', command=showCipher)
 radioAFC.place(x=260, y=45)
 
+# Enkripsi/Deskripsi File
 isFile = BooleanVar(root, False)
 checkFile = Checkbutton(root, text='Encrypt/Decyrpt File', variable=isFile, command=fileCheck)
 checkFile.place(x=455, y=5)
 btnImport = Button(root, text='Import File', command=importFile, bg='grey85', width=8, state=DISABLED)
 btnImport.place(x=460, y=35)
 
+# Input key
 keyLabel = Label(text='Key')
 key = Entry(root, width=60)
 mKeyLabel = Label(text='M-Key')
@@ -254,6 +257,7 @@ bKeyLabel = Label(text='B-Key')
 bKey = Spinbox(root, from_=1, to=25, width=20)
 btnClearKey = Button(root, text='Clear Key', command=clearKey, fg='red', bg='grey85', width=8)
 
+# Input text yang akan diolah
 labelInput = Label(text='Plain Text:')
 labelInput.place(x=5, y=105)
 btnClearText = Button(root, text='Clear Text', command=clearText, fg='red', bg='grey85', width=8)
@@ -261,12 +265,14 @@ btnClearText.place(x=5, y=125)
 textInput = Text(root, height=10, width=100)
 textInput.place(x=90, y=105)
 
+# Button enkripsi/deskripsi
 encrypt = BooleanVar(root, True)
 btnSwap = Button(root, text='Change to Decrypt', command=swapFunction, bg='grey85')
 btnSwap.place(x=90, y=285)
 btnConvert = Button(root, text='Convert', command=convertText, bg='grey85')
 btnConvert.place(x=210, y=285)
 
+# Radio button pilihan tipe output
 outputType = StringVar(root,'No Spaces')
 labelChoose = Label(root, text="Choose Output: ")
 labelChoose.place(x=280, y=285)
@@ -275,12 +281,14 @@ btnNoSpace.place(x=370, y=285)
 btnN5Letter = Radiobutton(root, text='n-5 Letter', variable=outputType, value='n-5 Letter', command=typeOutput)
 btnN5Letter.place(x=470, y=285)
 
+# Button save value
 canSave = BooleanVar(root, False)
 btnSave = Button(root, text='Save To Json File', command=saveToJsonFile, bg='grey85')
 btnSave.place(x=675, y=285)
 btnDownload = Button(root, text='Download Json File', command=downloadJsonFile, bg='grey85')
 btnDownload.place(x=780, y=285)
 
+# Output text hasil olahan
 labelOutput = Label(root, text='Cipher Text:')
 labelOutput.place(x=5, y=330)
 btnCopy = Button(root, text='Copy', command=copy, bg='grey85', width=8)

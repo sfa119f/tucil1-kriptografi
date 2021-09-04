@@ -1,5 +1,5 @@
 def invMod(val1, val2):
-# 
+# Menghitung invers modulo
   a, b, x, y, u, v =  val1, val2, 0, 1, 1, 0
   while a != 0:
     q = b // a

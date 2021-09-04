@@ -79,12 +79,10 @@ def clearText():
 def typeOutput():
   textOutput.config(state=NORMAL)
   temp = textOutput.get('1.0', 'end-1c')
-  print(temp)
   if outputType.get() == 'n-5 Letter':
     res = ' '.join([temp[i:i+5] for i in range(0, len(temp), 5)])
   else:
     res = temp.replace(" ", "")
-  print(res)
   textOutput.delete('1.0', END)
   textOutput.insert(tkinter.END, res)
   textOutput.config(state=DISABLED)
@@ -120,7 +118,6 @@ def showOutput(outputValue):
   canSave.set(True)
 
 def convertText():
-  global plain
   canSave.set(False)
   if cipher.get() == 'X':
     tkinter.messagebox.showinfo('Error', 'Cipher type not selected')
@@ -168,9 +165,9 @@ def convertText():
         outputValue = fullPlain(inputValue, keyValue, readMatriks("matriks.txt"))
     elif cipher.get() == 'Auto-key Vigenere Cipher':
       if encrypt.get():
-        outputValue, plain = autoCipher(inputValue, keyValue)
+        outputValue = autoCipher(inputValue, keyValue)
       else:
-        outputValue = autoPlain(inputValue, plain, keyValue)
+        outputValue = autoPlain(inputValue, keyValue)
     elif cipher.get() == 'Extended Vigenere Cipher':
       if encrypt.get():
         outputValue = encryptEVC(keyValue, inputValue)

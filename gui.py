@@ -27,10 +27,30 @@ def showCipher():
     keyLabel.place(x=5, y=75)
     key.place(x=90, y=75)
     btnClearKey.place(x=460, y=70)
+  if cipher.get() == 'Extended Vigenere Cipher':
+    outputType.set('No Spaces')
+    btnNoSpace.config(state=DISABLED)
+    btnN5Letter.config(state=DISABLED)
+  else:
+    btnNoSpace.config(state=NORMAL)
+    btnN5Letter.config(state=NORMAL)
 
 def importFile():
-  # file = filedialog.askopenfile()
-  # print(file)
+  # clearText()
+  # fileName = filedialog.askopenfile().name
+  # print(fileName)
+  # f = open(fileName, 'rb')
+  # content = f.read()
+  # print(content)
+  # f.close()
+  # print(list(map(int,content)))
+  # d = open('encryptFile', 'wb')
+  # d.write(content)
+  # d.close
+  # cipher.set('Extended Vigenere Cipher')
+  # showCipher()
+  # textInput.insert(tkinter.END, content)
+  # convertText()
   tkinter.messagebox.showinfo('Error', 'Import file not available')
 
 def swapFunction():
@@ -56,8 +76,20 @@ def clearText():
   textOutput.delete('1.0', END)
   textOutput.config(state=DISABLED)
 
+def typeOutput():
+  textOutput.config(state=NORMAL)
+  temp = textOutput.get('1.0', 'end-1c')
+  print(temp)
+  if outputType.get() == 'n-5 Letter':
+    res = ' '.join([temp[i:i+5] for i in range(0, len(temp), 5)])
+  else:
+    res = temp.replace(" ", "")
+  print(res)
+  textOutput.delete('1.0', END)
+  textOutput.insert(tkinter.END, res)
+  textOutput.config(state=DISABLED)
+
 def saveToJsonFile():
-  # isEncrypt, encryptType, key, outputValue
   convertText()
   if (canSave.get()):
     if cipher.get() == 'Affine Cipher':
@@ -78,10 +110,8 @@ def downloadJsonFile():
 
 def showOutput(outputValue):
   if cipher.get() != 'Extended Vigenere Cipher':
-    if form.get() == "5 Huruf":
-      temp = outputValue.replace(" ", "")
-      outputValue = [outputValue[i:i+5] for i in range(0, len(outputValue), 5)]
-      outputValue = ' '.join(outputValue)
+    if outputType.get() == 'n-5 Letter':
+      outputValue = ' '.join([outputValue[i:i+5] for i in range(0, len(outputValue), 5)])
 
   textOutput.config(state=NORMAL)
   textOutput.delete('1.0', END)
@@ -167,6 +197,7 @@ Radiobutton(root, text='Extended Vigenere Cipher', variable=cipher, value='Exten
 Radiobutton(root, text='Playfair Cipher', variable=cipher, value='Playfair Cipher', command=showCipher).place(x=260, y=25)
 Radiobutton(root, text='Affine Cipher', variable=cipher, value='Affine Cipher', command=showCipher).place(x=260, y=45)
 
+# isFile = BooleanVar(root, False)
 btnImport = Button(root, text='Import File', command=importFile, bg='grey85', width=8)
 btnImport.place(x=460, y=40)
 
@@ -191,11 +222,13 @@ btnSwap.place(x=90, y=285)
 btnConvert = Button(root, text='Convert', command=convertText, bg='grey85')
 btnConvert.place(x=210, y=285)
 
-form = StringVar(root,'X')
+outputType = StringVar(root,'No Spaces')
 labelChoose = Label(root, text="Choose Output: ")
 labelChoose.place(x=280, y=285)
-Radiobutton(root, text="Tanpa Spasi", variable=form, value="Tanpa Spasi").place(x=370, y=285)
-Radiobutton(root, text="N 5-Huruf", variable=form, value="5 Huruf").place(x=470, y=285)
+btnNoSpace = Radiobutton(root, text='No Spaces', variable=outputType, value='No Spaces', command=typeOutput)
+btnNoSpace.place(x=370, y=285)
+btnN5Letter = Radiobutton(root, text='n-5 Letter', variable=outputType, value='n-5 Letter', command=typeOutput)
+btnN5Letter.place(x=470, y=285)
 
 canSave = BooleanVar(root, True)
 btnSave = Button(root, text='Save To Json File', command=saveToJsonFile, bg='grey85')
@@ -207,10 +240,5 @@ labelOutput = Label(root, text='Cipher Text:')
 labelOutput.place(x=5, y=330)
 textOutput = Text(root, height=10, width=100, state=DISABLED)
 textOutput.place(x=90, y=330)
-
-# x = Label(root)
-# x.place(x=600, y=5)
-# y = Label(root)
-# y.place(x=600, y=25)
 
 mainloop()
